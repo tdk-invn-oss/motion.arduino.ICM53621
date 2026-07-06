@@ -575,12 +575,13 @@ accel_config0_fs_sel_t ICM536xx::accel_fsr_g_to_param(uint16_t accel_fsr_g) {
   accel_config0_fs_sel_t ret = ACCEL_CONFIG0_FS_SEL_16g;
 
   switch(accel_fsr_g) {
-  case 2:  ret = ACCEL_CONFIG0_FS_SEL_2g;  break;
   case 4:  ret = ACCEL_CONFIG0_FS_SEL_4g;  break;
   case 8:  ret = ACCEL_CONFIG0_FS_SEL_8g;  break;
   case 16: ret = ACCEL_CONFIG0_FS_SEL_16g; break;
 #if INV_IMU_ACC_HFSR_SUPPORTED
   case 32: ret = ACCEL_CONFIG0_FS_SEL_32g; break;
+#else
+  case 2:  ret = ACCEL_CONFIG0_FS_SEL_2g;  break;
 #endif
   default:
     /* Unknown accel FSR. Set to default 16G */
@@ -593,12 +594,17 @@ gyro_config0_fs_sel_t ICM536xx::gyro_fsr_dps_to_param(uint16_t gyro_fsr_dps) {
   gyro_config0_fs_sel_t ret = GYRO_CONFIG0_FS_SEL_2000dps;
 
   switch(gyro_fsr_dps) {
+  case 31:   ret = GYRO_CONFIG0_FS_SEL_31dps;   break;
+  case 62:   ret = GYRO_CONFIG0_FS_SEL_62dps;   break;
+  case 125:  ret = GYRO_CONFIG0_FS_SEL_125dps;  break;
   case 250:  ret = GYRO_CONFIG0_FS_SEL_250dps;  break;
   case 500:  ret = GYRO_CONFIG0_FS_SEL_500dps;  break;
   case 1000: ret = GYRO_CONFIG0_FS_SEL_1000dps; break;
   case 2000: ret = GYRO_CONFIG0_FS_SEL_2000dps; break;
 #if INV_IMU_GYR_HFSR_SUPPORTED
   case 4000: ret = GYRO_CONFIG0_FS_SEL_4000dps; break;
+#else
+  case 15:   ret = GYRO_CONFIG0_FS_SEL_15dps;   break;
 #endif
   default:
     /* Unknown gyro FSR. Set to default 2000dps" */
